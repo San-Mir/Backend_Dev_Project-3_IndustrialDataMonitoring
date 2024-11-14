@@ -5,15 +5,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IoT Data Dashboard</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
   </head>
   <body>
     <div class="dashboard-container">
-      <h1>IoT Device Metrics Dashboard</h1>
+      <h1>IoT Device Metrics Dashboard Hello</h1>
       <div id="data-metrics">
         <!-- Data will be dynamically inserted here -->
       </div>
     </div>
-    <script src="{% static 'js/dashboard.js' %}"></script>
+    <script>
+        console.log("Hello from dashboard.js");
+        const socket = new WebSocket('ws://localhost:8000/ws/data/');
+
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            console.log("Received data:", data);
+            // You can now use `data` to update the frontend
+        };
+    </script>
   </body>
 </html>

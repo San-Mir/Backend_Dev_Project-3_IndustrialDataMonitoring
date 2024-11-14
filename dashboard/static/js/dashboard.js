@@ -1,3 +1,4 @@
+console.log("Hello from dashboard.js");
 const socket = new WebSocket('ws://localhost:8000/ws/data/');
 
 socket.onmessage = function(event) {
