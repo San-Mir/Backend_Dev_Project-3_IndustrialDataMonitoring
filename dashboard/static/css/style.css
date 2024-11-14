@@ -1,45 +1,35 @@
-/* style.css */
-
 body {
   font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
   margin: 0;
   padding: 0;
-  background-color: #f4f6f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-header {
-  background-color: #2d87f0;
-  color: white;
+.dashboard-container {
+  width: 60%;
   padding: 20px;
-  text-align: center;
-}
-
-main {
-  padding: 20px;
-}
-
-.metrics-container {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
+  background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
-h2 {
-  color: #2d87f0;
-}
-
-#metrics {
-  font-size: 18px;
+h1 {
+  text-align: center;
   color: #333;
-  margin-top: 20px;
 }
 
-.metric {
+.device-data {
+  margin: 10px 0;
   padding: 10px;
-  border-bottom: 1px solid #e0e0e0;
+  background-color: #f0f8ff;
+  border-left: 4px solid #5b9bd5;
 }
 
-.metric:last-child {
-  border-bottom: none;
+.device-data p {
+  margin: 5px 0;
+  color: #555;
 }

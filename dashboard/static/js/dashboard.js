@@ -1,27 +1,35 @@
-const metricsContainer = document.getElementById("metrics");
-const socket = new WebSocket(
-  "ws://" + window.location.host + "/ws/sensor_data/"
-);
+// Connect to WebSocket for real-time data updates
+const socket = new WebSocket("ws://" + window.location.host + "/ws/monitor/");
 
 socket.onmessage = function (event) {
+  console.log("Received data:", event.data); // Log the incoming data to the console for debugging
+
   const data = JSON.parse(event.data);
 
-  // Create a new metric entry with device info
-  const metricElement = document.createElement("div");
-  metricElement.className = "metric";
-  metricElement.innerHTML = `<strong>Device:</strong> ${
-    data.device_id
-  } | <strong>Metric:</strong> ${
-    data.metric
-  } | <strong>Timestamp:</strong> ${new Date(
-    data.timestamp * 1000
-  ).toLocaleTimeString()}`;
+  // Create a new div element to display the device data
+  const dataContainer = document.getElementById("data-metrics");
+  const deviceData = document.createElement("div");
+  deviceData.classList.add("device-data");
 
-  // Add the new metric to the top of the container
-  metricsContainer.prepend(metricElement);
+  // Display device data
+  deviceData.innerHTML = `
+        <p><strong>Device ID:</strong> ${data.device_id}</p>
+        <p><strong>Metric:</strong> ${data.metric}</p>
+        <p><strong>Timestamp:</strong> ${new Date(
+          data.timestamp * 1000
+        ).toLocaleString()}</p>
+    `;
 
-  // Optional: Limit displayed metrics to the latest 10
-  if (metricsContainer.childElementCount > 10) {
-    metricsContainer.removeChild(metricsContainer.lastChild);
-  }
+  // Append the new data to the dashboard
+  dataContainer.prepend(deviceData);
+};
+
+// Handle WebSocket errors
+socket.onerror = function (error) {
+  console.error("WebSocket error:", error);
+};
+
+// Close WebSocket connection on window unload
+window.onbeforeunload = function () {
+  socket.close();
 };

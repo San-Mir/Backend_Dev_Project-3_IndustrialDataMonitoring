@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "monitoring_system",
     "channels", # Add Channels for WebSockets support
     "dashboard", # Add the dashboard app for real-time data display
 ]
@@ -69,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-ASGI_APPLICATION = "monitoring_system.asgi.application"
+ASGI_APPLICATION = "monitoring_system.routing.application"
 
 
 # Database

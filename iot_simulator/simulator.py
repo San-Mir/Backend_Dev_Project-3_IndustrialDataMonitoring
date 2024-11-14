@@ -6,6 +6,7 @@ import random
 from kafka import KafkaProducer
 from config import KAFKA_TOPIC, KAFKA_BOOTSTRAP_SERVERS, DEVICE_IDS, DATA_FREQUENCY
 
+
 # Initialize Kafka producer
 producer = KafkaProducer(
     bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,

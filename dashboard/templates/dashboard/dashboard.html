@@ -4,22 +4,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Real-Time Monitoring System</title>
+    <title>IoT Data Dashboard</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-    <script src="{% static 'js/dashboard.js' %}"></script>
   </head>
   <body>
-    <header>
-      <h1>Real-Time Monitoring System</h1>
-    </header>
-
-    <main>
-      <section class="metrics-container">
-        <h2>Live Data Metrics</h2>
-        <div id="metrics">
-          <!-- Real-time data will be injected here by JavaScript -->
-        </div>
-      </section>
-    </main>
+    <div class="dashboard-container">
+      <h1>IoT Device Metrics Dashboard</h1>
+      <div id="data-metrics">
+        <!-- Data will be dynamically inserted here -->
+      </div>
+    </div>
+    <script src="{% static 'js/dashboard.js' %}"></script>
   </body>
 </html>

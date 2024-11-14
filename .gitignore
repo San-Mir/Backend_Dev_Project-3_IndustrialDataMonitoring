@@ -1,2 +1,6 @@
 /venv/
 .env
+*.pyc
+dashboard/*.pyc
+iot_simulator/*.pyc
+monitoring_system/*.pyc
