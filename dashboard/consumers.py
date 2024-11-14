@@ -1,17 +1,35 @@
+# consumers.py
 import json
-from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.generic.websocket import WebsocketConsumer
 
-class SensorDataConsumer(AsyncWebsocketConsumer):
-    async def connect(self):
-        await self.channel_layer.group_add("sensor_data", self.channel_name)
-        await self.accept()
+class DataConsumer(WebsocketConsumer):
+    def connect(self):
+        self.accept()
+        self.send_data()
 
-    async def disconnect(self, close_code):
-        await self.channel_layer.group_discard("sensor_data", self.channel_name)
+    def send_data(self):
+        # Simulated data that resembles the json_df structure
+        sample_data = [
+            {
+                "device_id": "device_001",
+                "metric": 42,
+                "timestamp": "2024-11-14T12:34:56",
+                "hello_world": "hello world"
+            },
+            {
+                "device_id": "device_002",
+                "metric": 78,
+                "timestamp": "2024-11-14T12:35:56",
+                "hello_world": "hello world"
+            }
+        ]
+        
+        # Convert to JSON
+        json_data = json.dumps(sample_data)
+        
+        # Send data to WebSocket
+        self.send(text_data=json_data)
 
-    async def receive(self, text_data):
-        pass  # We won’t be receiving data from the front-end in this case.
+    def disconnect(self, close_code):
+        pass
 
-    async def send_data(self, event):
-        data = event['data']
-        await self.send(text_data=json.dumps(data))
