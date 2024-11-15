@@ -9,18 +9,24 @@
   <body>
     <div class="dashboard-container">
       <h1>IoT Device Metrics Dashboard Hello</h1>
-      <div id="data-metrics">
+      <div id="data-container">
         <!-- Data will be dynamically inserted here -->
       </div>
     </div>
     <script>
         console.log("Hello from dashboard.js");
         const socket = new WebSocket('ws://localhost:8000/ws/data/');
+        const dataContainer = document.getElementById('data-container');
 
         socket.onmessage = function(event) {
             const data = JSON.parse(event.data);
             console.log("Received data:", data);
-            // You can now use `data` to update the frontend
+
+        data.forEach(item => {
+            const dataDiv = document.createElement('div');
+            dataDiv.textContent = `Device ID: ${item.device_id}, Metric: ${item.metric}, Timestamp: ${item.timestamp}, Message: ${item.hello_world}`;
+            dataContainer.appendChild(dataDiv);
+            });
         };
     </script>
   </body>
