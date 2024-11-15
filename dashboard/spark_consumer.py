@@ -1,3 +1,7 @@
+# Shared queue
+from queue import Queue
+shared_queue = Queue()
+
 import findspark
 findspark.init() 
 
@@ -39,10 +43,22 @@ df = spark.readStream \
 # Parse the JSON data and select required columns
 json_df = df.select(from_json(col("value").cast("string"), schema).alias("data")).select("data.*").withColumn("hello_world", lit("hello world"))
 
+# Write to the queue
+def write_to_queue(batch_df, batch_id):
+    # Collect data from the DataFrame and put it in the shared queue
+    data = batch_df.toJSON().collect()
+    for record in data:
+        shared_queue.put(record)
+
+
 # Write the processed data to the console for testing
 query = json_df.writeStream \
     .outputMode("append") \
-    .format("console") \
+    .foreachBatch(write_to_queue)\
+    .format('console')\
     .start()
 
 query.awaitTermination()
+
+# while not shared_queue.empty():
+#     print(f'data: ', {shared_queue.get()})
