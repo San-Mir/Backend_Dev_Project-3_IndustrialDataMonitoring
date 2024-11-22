@@ -5,3 +5,4 @@
 dashboard/*.pyc
 iot_simulator/*.pyc
 monitoring_system/*.pyc
+/node_modules/

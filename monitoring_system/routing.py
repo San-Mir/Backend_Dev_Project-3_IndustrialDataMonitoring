@@ -1,6 +1,6 @@
 # routing.py
 from django.urls import path
-from . import consumers
+from monitoring_system import consumers
 
 app_name = 'dashboard'
 

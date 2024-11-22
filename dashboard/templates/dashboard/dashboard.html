@@ -4,30 +4,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IoT Data Dashboard</title>
+    <title>IoT Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
     <div class="dashboard-container">
-      <h1>IoT Device Metrics Dashboard Hello</h1>
-      <div id="data-container">
-        <!-- Data will be dynamically inserted here -->
+      <h1>IoT Device Dashboard</h1>
+      <div id="data-container" class="data-container">
+        <div id="charts-container">
+          <canvas id="lineChart" width="400" height="200"></canvas>
+        </div>
       </div>
     </div>
     <script>
-        console.log("Hello from dashboard.js");
-        const socket = new WebSocket('ws://localhost:8000/ws/data/');
-        const dataContainer = document.getElementById('data-container');
-
-        socket.onmessage = function(event) {
-            const data = JSON.parse(event.data);
-            console.log("Received data:", data);
-
-        data.forEach(item => {
-            const dataDiv = document.createElement('div');
-            dataDiv.textContent = `Device ID: ${item.device_id}, Metric: ${item.metric}, Timestamp: ${item.timestamp}, Message: ${item.hello_world}`;
-            dataContainer.appendChild(dataDiv);
-            });
-        };
+      const data = JSON.parse("{{ messages|safe|escapejs }}");
+      console.log(data);
     </script>
+    <script src="{% static 'js/dashboard.js' %}"></script>
   </body>
 </html>

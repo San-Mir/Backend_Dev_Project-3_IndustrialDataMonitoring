@@ -1,31 +1,45 @@
-# consumers.py
-from queue import Empty
-from threading import Thread
 import json
 from channels.generic.websocket import WebsocketConsumer
-from dashboard.spark_consumer import shared_queue
+from threading import Thread
+from kafka import KafkaConsumer
+
 
 class DataConsumer(WebsocketConsumer):
     def connect(self):
         self.accept()
-        # Start a thread to send data from the shared queue to WebSocket
+        # Start a thread to consume data from Kafka and send it to the WebSocket
         self.running = True
-        self.thread = Thread(target=self.send_data_from_queue)
+        self.thread = Thread(target=self.consume_kafka_data)
         self.thread.start()
 
-    def send_data_from_queue(self):
-        while self.running:
-            try:
-                # Retrieve data from the queue with a timeout
-                data = shared_queue.get(timeout=1)  # Wait for up to 1 second
-                print(f"Sending data to WebSocket: {data}")  # Debugging
-                self.send(text_data=data)  # Send the data as WebSocket message
-            except Empty:
-                # Queue is empty; continue waiting
-                continue
+    def consume_kafka_data(self):
+        """Consume data from Kafka and send it to the WebSocket."""
+        try:
+            # Set up Kafka consumer
+            consumer = KafkaConsumer(
+                'iot_data',  # Replace with your Kafka topic name
+                bootstrap_servers='localhost:9092',
+                value_deserializer=lambda x: json.loads(x.decode('utf-8')),
+            )
 
+            while self.running:
+                for message in consumer:
+                    if not self.running:
+                        break  # Exit loop if WebSocket is disconnected
+
+                    data = message.value  # The data from Kafka
+                    print(f"Received data from Kafka: {data}")  # Debugging
+
+                    # Send the data to the WebSocket
+                    self.send(text_data=json.dumps(data))
+
+        except Exception as e:
+            print(f"Error in Kafka consumer thread: {e}")
+        finally:
+            print("Kafka consumer thread shutting down.")
 
     def disconnect(self, close_code):
+        """Handle WebSocket disconnection."""
         self.running = False
-        self.thread.join()
-
+        self.thread.join()  # Stop the Kafka consumption thread
+        print("WebSocket disconnected.")

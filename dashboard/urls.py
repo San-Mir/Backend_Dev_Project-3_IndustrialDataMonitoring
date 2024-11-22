@@ -1,6 +1,6 @@
 from django.urls import path
-from . import views
+from .views import KafkaDataView
 
 urlpatterns = [
-    path('', views.dashboard_view, name='dashboard'),  # Add a path for the dashboard view
+    path('', KafkaDataView.as_view(), name='kafka_messages'),
 ]

@@ -1,0 +1,72 @@
+/* General body styling */
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #e6f0ff; /* Light blue background */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Main dashboard container */
+.dashboard-container {
+  width: 70%;
+  max-width: 800px;
+  padding: 25px;
+  background-color: #ffffff; /* White background for contrast */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Softer shadow */
+  border-radius: 12px;
+  border-top: 4px solid #1e90ff; /* Stylish top border */
+}
+
+/* Dashboard title */
+h1 {
+  text-align: center;
+  color: #1e90ff; /* Blue title */
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/* Data container for displaying real-time metrics */
+#data-container {
+  padding: 15px;
+  background-color: #f0f8ff; /* Very light blue background */
+  border: 2px dashed #5b9bd5; /* Dashed border for data section */
+  border-radius: 8px;
+  min-height: 150px; /* Ensures visible container when empty */
+  overflow-y: auto; /* Allows scrolling for overflowed data */
+}
+
+/* Individual data items */
+.data-item {
+  margin: 10px 0;
+  padding: 15px;
+  background-color: #e6efff; /* Light blue for data item */
+  border-left: 6px solid #1e90ff; /* Blue accent for data items */
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #333; /* Dark text for readability */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Data item text */
+.data-item p {
+  margin: 5px 0;
+  color: #444; /* Slightly darker text for emphasis */
+}
+
+/* Scrollbar styling for the data container */
+#data-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+#data-container::-webkit-scrollbar-thumb {
+  background: #1e90ff; /* Blue scrollbar */
+  border-radius: 4px;
+}
+
+#data-container::-webkit-scrollbar-track {
+  background: #f0f8ff; /* Light blue track */
+}
