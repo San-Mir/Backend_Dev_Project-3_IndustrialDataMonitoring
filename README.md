@@ -5,6 +5,6 @@
 - IT Fundamentals
 - Basic & Intermediate Python
 - Database Development with PostgreSQL
-- Backend Development with Python & Django
+- Backend Development with Django
 - RESTful API Development
 - Cloud Computing Using AWS 
